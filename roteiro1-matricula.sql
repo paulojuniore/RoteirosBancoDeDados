@@ -6,7 +6,7 @@ CREATE TABLE AUTOMOVEL(
 	marca VARCHAR(10),
 	ano CHAR(4),
 	placa CHAR(8),
-	proprietario VARCHAR(20)
+	cpf_proprietario VARCHAR(13)
 );
 
 CREATE TABLE SEGURADO(
@@ -66,6 +66,14 @@ ALTER TABLE sinistro ADD PRIMARY KEY (placa_veiculo, hora);
 ALTER TABLE pericia ADD PRIMARY KEY (cpf);
 
 ALTER TABLE reparo ADD PRIMARY KEY (placa_veiculo);
+
+
+-- Questão 4
+
+ALTER TABLE automovel ADD CONSTRAINT automovel_cpfProprietario FOREIGN KEY (cpf_proprietario) REFERENCES segurado(cpf);
+
+ALTER TABLE segurado ADD CONSTRAINT segurado_noSeguro FOREIGN KEY(numero_seguro) REFERENCES seguro(numero_seguro);
+
 
 
 
