@@ -34,7 +34,7 @@ CREATE TABLE SEGURO(
 
 CREATE TABLE SINISTRO(
 	tipo_sinistro VARCHAR(10),
-	placa_veiculo VARCHAR(8),
+	noFab VARCHAR(8),
 	local VARCHAR(30),
 	hora TIMESTAMP
 );
@@ -118,16 +118,16 @@ CREATE TABLE AUTOMOVEL(
 	cpf_proprietario VARCHAR(13) NOT NULL
 );
 
-CREATE TABLE SEGURADO(
-	nome VARCHAR(20) NOT NULL,
-	cpf VARCHAR(13) PRIMARY KEY,
-	numero_seguro SERIAL NOT NULL,
-	valor_seguro NUMERIC NOT NULL
-);
 
 CREATE TABLE PERITO(
 	nome VARCHAR(20) NOT NULL,
 	cpf VARCHAR(13) PRIMARY KEY
+);
+
+CREATE TABLE PERICIA(
+	id_pericia SERIAL PRIMARY KEY,
+	cpf_perito VARCHAR(13) NOT NULL REFERENCES perito(cpf),
+	sinistro VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE OFICINA(
@@ -135,48 +135,38 @@ CREATE TABLE OFICINA(
 	cnpj VARCHAR(20) PRIMARY KEY
 );
 
+CREATE TABLE REPARO(
+	id_reparo SERIAL PRIMARY KEY,
+	noFab VARCHAR(17) NOT NULL REFERENCES automovel(noFab),
+	custo_reparo VARCHAR(20) NOT NULL,
+	cnpj_oficina VARCHAR(20) NOT NULL REFERENCES oficina(cnpj)
+);
+
+
 CREATE TABLE SEGURO(
 	numero_seguro SERIAL PRIMARY KEY,
 	valor_seguro NUMERIC NOT NULL,
-	noFab VARCHAR(17) NOT NULL
+	noFab VARCHAR(17) NOT NULL REFERENCES automovel(noFab)
 );
+
+CREATE TABLE SEGURADO(
+	nome VARCHAR(20) NOT NULL,
+	cpf VARCHAR(13) PRIMARY KEY,
+	numero_seguro SERIAL NOT NULL REFERENCES seguro(numero_seguro),
+	valor_seguro NUMERIC NOT NULL
+);
+
 
 CREATE TABLE SINISTRO(
 	tipo_sinistro VARCHAR(10) NOT NULL,
-	placa_veiculo VARCHAR(8),
+	noFab VARCHAR(17) REFERENCES automovel(noFab),
 	local VARCHAR(30) NOT NULL,
 	hora TIMESTAMP NOT NULL,
 
-	CONSTRAINT pk PRIMARY KEY(placa_veiculo, hora)
+	CONSTRAINT pk PRIMARY KEY(noFab, hora)
 );
-
-CREATE TABLE PERICIA(
-	id_pericia SERIAL PRIMARY KEY,
-	cpf_perito VARCHAR(13) NOT NULL,
-	sinistro VARCHAR(10) NOT NULL
-);
-
-CREATE TABLE REPARO(
-	id_reparo SERIAL PRIMARY KEY,
-	noFab VARCHAR(17) NOT NULL,
-	custo_reparo VARCHAR(20) NOT NULL,
-	cnpj_oficina VARCHAR(20) NOT NULL
-);
-
 
 ALTER TABLE automovel ADD CONSTRAINT automovel_cpfProprietario FOREIGN KEY (cpf_proprietario) REFERENCES segurado(cpf);
-
-ALTER TABLE segurado ADD CONSTRAINT segurado_noSeguro FOREIGN KEY(numero_seguro) REFERENCES seguro(numero_seguro);
-
-ALTER TABLE seguro ADD CONSTRAINT seguro_placa_veiculo FOREIGN KEY(noFab) REFERENCES automovel(noFab);
-
-ALTER TABLE sinistro ADD CONSTRAINT sinistro_placa_veiculo FOREIGN KEY(placa_veiculo) REFERENCES automovel(placa);
-
-ALTER TABLE pericia ADD CONSTRAINT pericia_cpf_perito FOREIGN KEY(cpf_perito) REFERENCES perito(cpf);
-
-ALTER TABLE reparo ADD CONSTRAINT reparo_placa_veiculo FOREIGN KEY(nofab) REFERENCES automovel(noFab);
-
-ALTER TABLE reparo ADD CONSTRAINT reparo_cnpj_oficina FOREIGN KEY(cnpj_oficina) REFERENCES oficina(cnpj);
 
 
 -- Questão 9
