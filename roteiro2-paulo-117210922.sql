@@ -45,7 +45,9 @@ ALTER TABLE tarefas RENAME COLUMN cpf_empregado TO func_resp_cpf;
 ALTER TABLE tarefas RENAME COLUMN status_atividade TO status;
 
 --- Questão 5
+ALTER TABLE tarefas ADD CONSTRAINT pks_tarefas (id, func_resp_cpf);
 ALTER TABLE tarefas ADD PRIMARY KEY (id);
+ALTER TABLE tarefas ADD PRIMARY KEY (func_resp_cpf);
 
 --- Questão 6
 --- A
@@ -56,3 +58,32 @@ UPDATE tarefas SET status = 'P' WHERE status = 'A';
 UPDATE tarefas SET status = 'E' WHERE status = 'R';
 UPDATE tarefas SET status = 'C' WHERE status = 'F';
 ALTER TABLE tarefas ADD CONSTRAINT tarefa_status CHECK (status IN ('P', 'E', 'C'));
+
+--- Questão 7
+UPDATE tarefas SET prioridade = '5' WHERE prioridade = '32767';
+ALTER TABLE tarefas ADD CONSTRAINT tarefa_check_prioridade CHECK (prioridade IN (0, 1, 2, 3, 4, 5));
+
+--- Questão 8
+CREATE TABLE FUNCIONARIO(
+	cpf CHAR(11) PRIMARY KEY NOT NULL,
+	data_nasc DATE NOT NULL,
+	nome VARCHAR(50) NOT NULL,
+	funcao VARCHAR(30) NOT NULL,
+	nivel CHAR(1),
+	superior_cpf CHAR(11) REFERENCES tarefas(func_resp_cpf),
+
+	CONSTRAINT funcao_chk CHECK (funcao IN ('LIMPEZA', 'SUP_LIMPEZA')),
+	CONSTRAINT nivel_chk CHECK (nivel IN ('J', 'P', 'S'))
+);
+
+
+
+
+
+
+
+
+
+
+
+
