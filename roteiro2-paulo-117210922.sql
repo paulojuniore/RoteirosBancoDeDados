@@ -45,9 +45,10 @@ ALTER TABLE tarefas RENAME COLUMN cpf_empregado TO func_resp_cpf;
 ALTER TABLE tarefas RENAME COLUMN status_atividade TO status;
 
 --- Questão 5
-ALTER TABLE tarefas ADD CONSTRAINT pks_tarefas (id, func_resp_cpf);
-ALTER TABLE tarefas ADD PRIMARY KEY (id);
-ALTER TABLE tarefas ADD PRIMARY KEY (func_resp_cpf);
+ALTER TABLE tarefas ADD CONSTRAINT pks_tarefas PRIMARY KEY (id, func_resp_cpf);
+ALTER TABLE tarefas DROP CONSTRAINT pks_tarefas;
+ALTER TABLE tarefas ADD CONSTRAINT pk_tarefas PRIMARY KEY (func_resp_cpf);
+ALTER TABLE tarefas ADD CONSTRAINT unique_id UNIQUE (id);
 
 --- Questão 6
 --- A
@@ -60,7 +61,7 @@ UPDATE tarefas SET status = 'C' WHERE status = 'F';
 ALTER TABLE tarefas ADD CONSTRAINT tarefa_status CHECK (status IN ('P', 'E', 'C'));
 
 --- Questão 7
-UPDATE tarefas SET prioridade = '5' WHERE prioridade = '32767';
+UPDATE tarefas SET prioridade = '5' WHERE prioridade IN ('32766', '32767');
 ALTER TABLE tarefas ADD CONSTRAINT tarefa_check_prioridade CHECK (prioridade IN (0, 1, 2, 3, 4, 5));
 
 --- Questão 8
@@ -69,13 +70,18 @@ CREATE TABLE FUNCIONARIO(
 	data_nasc DATE NOT NULL,
 	nome VARCHAR(50) NOT NULL,
 	funcao VARCHAR(30) NOT NULL,
-	nivel CHAR(1),
+	nivel CHAR(1) NOT NULL,
 	superior_cpf CHAR(11) REFERENCES tarefas(func_resp_cpf),
 
 	CONSTRAINT funcao_chk CHECK (funcao IN ('LIMPEZA', 'SUP_LIMPEZA')),
 	CONSTRAINT nivel_chk CHECK (nivel IN ('J', 'P', 'S'))
 );
 
+INSERT INTO funcionario VALUES ('12345678911', '1980-05-07', 'Pedro da Silva', 'SUP_LIMPEZA', 'S', null);
+INSERT INTO funcionario VALUES ('12345678912', '1980-03-08', 'Jose da Silva', 'LIMPEZA', 'J', '12345678911');
+
+INSERT INTO funcionario VALUES ('12345678913', '1980-04-09', 'Joao da Silva', 'LIMPEZA', 'J', null);
+ALTER TABLE funcionario ADD CONSTRAINT funcionario_check_funcao_cpfsuperior CHECK (funcao = 'LIMPEZA') ALTER COLUMN superior_cpf SET NOT NULL;
 
 
 
