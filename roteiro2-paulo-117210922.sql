@@ -46,7 +46,7 @@ ALTER TABLE tarefas RENAME COLUMN status_atividade TO status;
 
 --- Questão 5
 ALTER TABLE tarefas ADD CONSTRAINT pks_tarefas PRIMARY KEY (id, func_resp_cpf);
-ALTER TABLE tarefas DROP CONSTRAINT pks_tarefas;
+ALTER TABLE tarefas DROP CONSTRAINT pk_tarefas;
 ALTER TABLE tarefas ADD CONSTRAINT pk_tarefas PRIMARY KEY (func_resp_cpf);
 ALTER TABLE tarefas ADD CONSTRAINT unique_id UNIQUE (id);
 
@@ -80,8 +80,8 @@ CREATE TABLE FUNCIONARIO(
 INSERT INTO funcionario VALUES ('12345678911', '1980-05-07', 'Pedro da Silva', 'SUP_LIMPEZA', 'S', null);
 INSERT INTO funcionario VALUES ('12345678912', '1980-03-08', 'Jose da Silva', 'LIMPEZA', 'J', '12345678911');
 
-INSERT INTO funcionario VALUES ('12345678913', '1980-04-09', 'Joao da Silva', 'LIMPEZA', 'J', null);
 ALTER TABLE funcionario ADD CONSTRAINT funcionario_check_funcao_cpfsuperior CHECK (NOT (funcao = 'LIMPEZA' AND superior_cpf IS NULL));
+INSERT INTO funcionario VALUES ('12345678913', '1980-04-09', 'Joao da Silva', 'LIMPEZA', 'J', null);
 
 --- Questão 9
 
@@ -118,6 +118,17 @@ INSERT INTO funcionario VALUES ('12231316212', '1983-05-16', 'Jussara', 'LIMPEZA
 --- funcao null
 INSERT INTO funcionario VALUES ('12231316212', '1979-03-30', 'Jussara', null, 'S', '98765432122');
 --- funcao LIMPEZA com o cpf do superior null
+INSERT INTO funcionario VALUES ('12345678913', '1980-04-09', 'Joao da Silva', 'LIMPEZA', 'J', null);
+
+
+--- Questão 10
+
+DELETE FROM funcionario WHERE cpf = '33354634135';
+
+INSERT INTO funcionario VALUES ('33354634135', '1978-03-15', 'Thulio Rocha', 'LIMPEZA', 'S', '32323232955');
+
+
+
 
 
 
