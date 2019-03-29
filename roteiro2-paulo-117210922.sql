@@ -81,7 +81,9 @@ INSERT INTO funcionario VALUES ('12345678911', '1980-05-07', 'Pedro da Silva', '
 INSERT INTO funcionario VALUES ('12345678912', '1980-03-08', 'Jose da Silva', 'LIMPEZA', 'J', '12345678911');
 
 INSERT INTO funcionario VALUES ('12345678913', '1980-04-09', 'Joao da Silva', 'LIMPEZA', 'J', null);
---- ALTER TABLE funcionario ADD CONSTRAINT funcionario_check_funcao_cpfsuperior CHECK (funcao = 'LIMPEZA') ALTER COLUMN superior_cpf SET NOT NULL;
+ALTER TABLE funcionario ADD CONSTRAINT funcionario_check_funcao_cpfsuperior CHECK (NOT (funcao = 'LIMPEZA' AND superior_cpf IS NULL));
+
+--- Questão 9
 
 --- Inserções que funcionam corretamente
 INSERT INTO funcionario VALUES ('33344455591', '1980-05-13', 'Pedro Julio', 'SUP_LIMPEZA', 'S', null);
