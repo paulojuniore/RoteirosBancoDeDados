@@ -83,6 +83,7 @@ INSERT INTO funcionario VALUES ('12345678912', '1980-03-08', 'Jose da Silva', 'L
 INSERT INTO funcionario VALUES ('12345678913', '1980-04-09', 'Joao da Silva', 'LIMPEZA', 'J', null);
 --- ALTER TABLE funcionario ADD CONSTRAINT funcionario_check_funcao_cpfsuperior CHECK (funcao = 'LIMPEZA') ALTER COLUMN superior_cpf SET NOT NULL;
 
+--- Inserções que funcionam corretamente
 INSERT INTO funcionario VALUES ('33344455591', '1980-05-13', 'Pedro Julio', 'SUP_LIMPEZA', 'S', null);
 INSERT INTO funcionario VALUES ('33344466612', '1978-07-19', 'Zé Felipe', 'SUP_LIMPEZA', 'S', null);
 INSERT INTO funcionario VALUES ('33344477731', '1975-01-08', 'Cristiano Vieira', 'LIMPEZA', 'S', '32323232955');
@@ -94,6 +95,27 @@ INSERT INTO funcionario VALUES ('11122233345', '1983-05-19', 'Gabriel Pereira', 
 INSERT INTO funcionario VALUES ('33344462717', '1985-04-13', 'Thiago Martins', 'SUP_LIMPEZA', 'S', null);
 INSERT INTO funcionario VALUES ('33354637721', '1978-03-15', 'Thulio Rocha', 'SUP_LIMPEZA', 'S', null);
 
+--- Inserções que não devem ser processadas, pois violam uma ou mais constraints
+
+--- nivel inválido
+INSERT INTO funcionario VALUES ('11122299932', '1984-12-13', 'Larissa', 'LIMPEZA', 'O', '98765432122');
+--- cpf já existente
+INSERT INTO funcionario VALUES ('11122233345', '1983-05-19', 'Gabriel Pereira', 'LIMPEZA', 'S', '98765432122');
+--- cpf do funcionario null
+INSERT INTO funcionario VALUES (null, '1983-05-19', 'Gabriel Pereira', 'LIMPEZA', 'S', '98765432122');
+--- nome do funcionario null
+INSERT INTO funcionario VALUES ('12231316212', '1983-05-19', null, 'LIMPEZA', 'S', '98765432122');
+--- cpf do superior inexistente
+INSERT INTO funcionario VALUES ('12231316212', '1983-05-19', 'Jussara', 'LIMPEZA', 'S', '91215431121');
+--- funcao invalida = LIMPAR
+INSERT INTO funcionario VALUES ('12231316212', '1983-05-19', 'Jussara', 'LIMPAR', 'S', '98765432122');
+--- data de nascimento null
+INSERT INTO funcionario VALUES ('12231316212', null, 'Jussara', 'LIMPEZA', 'S', '98765432122');
+--- nivel null
+INSERT INTO funcionario VALUES ('12231316212', '1983-05-16', 'Jussara', 'LIMPEZA', null, '98765432122');
+--- funcao null
+INSERT INTO funcionario VALUES ('12231316212', '1979-03-30', 'Jussara', null, 'S', '98765432122');
+--- funcao LIMPEZA com o cpf do superior null
 
 
 
