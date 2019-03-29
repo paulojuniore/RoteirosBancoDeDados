@@ -81,7 +81,18 @@ INSERT INTO funcionario VALUES ('12345678911', '1980-05-07', 'Pedro da Silva', '
 INSERT INTO funcionario VALUES ('12345678912', '1980-03-08', 'Jose da Silva', 'LIMPEZA', 'J', '12345678911');
 
 INSERT INTO funcionario VALUES ('12345678913', '1980-04-09', 'Joao da Silva', 'LIMPEZA', 'J', null);
-ALTER TABLE funcionario ADD CONSTRAINT funcionario_check_funcao_cpfsuperior CHECK (funcao = 'LIMPEZA') ALTER COLUMN superior_cpf SET NOT NULL;
+--- ALTER TABLE funcionario ADD CONSTRAINT funcionario_check_funcao_cpfsuperior CHECK (funcao = 'LIMPEZA') ALTER COLUMN superior_cpf SET NOT NULL;
+
+INSERT INTO funcionario VALUES ('33344455591', '1980-05-13', 'Pedro Julio', 'SUP_LIMPEZA', 'S', null);
+INSERT INTO funcionario VALUES ('33344466612', '1978-07-19', 'Zé Felipe', 'SUP_LIMPEZA', 'S', null);
+INSERT INTO funcionario VALUES ('33344477731', '1975-01-08', 'Cristiano Vieira', 'LIMPEZA', 'S', '32323232955');
+INSERT INTO funcionario VALUES ('33344488846', '1979-09-22', 'Felipe Almeida', 'SUP_LIMPEZA', 'S', null);
+INSERT INTO funcionario VALUES ('33344499976', '1983-04-13', 'Anderson Alves', 'SUP_LIMPEZA', 'P', null);
+INSERT INTO funcionario VALUES ('33399944412', '1982-05-19', 'Tiago Leite', 'SUP_LIMPEZA', 'S', null);
+INSERT INTO funcionario VALUES ('22233344498', '1977-05-23', 'Leandro Mendes', 'LIMPEZA', 'S', '98765432122');
+INSERT INTO funcionario VALUES ('11122233345', '1983-05-19', 'Gabriel Pereira', 'LIMPEZA', 'S', '98765432122');
+INSERT INTO funcionario VALUES ('33344462717', '1985-04-13', 'Thiago Martins', 'SUP_LIMPEZA', 'S', null);
+INSERT INTO funcionario VALUES ('33354637721', '1978-03-15', 'Thulio Rocha', 'SUP_LIMPEZA', 'S', null);
 
 
 
