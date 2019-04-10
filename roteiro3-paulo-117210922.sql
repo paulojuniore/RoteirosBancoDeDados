@@ -5,8 +5,10 @@ CREATE TABLE FARMACIA (
 	nome VARCHAR(25) NOT NULL,
 	tipo VARCHAR(10) NOT NULL,
 	gerente_cpf VARCHAR(14) NOT NULL,
+	estado CHAR(2) NOT NULL
 
-	CONSTRAINT tipo_valido_chk CHECK (tipo IN ('sede', 'filial'))	
+	CONSTRAINT tipo_valido_chk CHECK (tipo IN ('sede', 'filial')),
+	CONSTRAINT estado_valido_chk CHECK (estado IN ('AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE'));
 );
 
 -- F = farmacêutico, V = vendedor, E = entregador, C = caixa, A = administrador
@@ -49,7 +51,6 @@ CREATE TABLE ENDERECO_CLIENTE (
 );
 
 CREATE TABLE ENDERECO_FARMACIA (
-	bairro VARCHAR(20) PRIMARY KEY NOT NULL,
-	cidade VARCHAR(20) NOT NULL,
-	estado CHAR(2) NOT NULL
+	bairro VARCHAR(20) PRIMARY KEY UNIQUE,
+	cidade VARCHAR(20) NOT NULL
 );
