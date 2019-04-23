@@ -50,4 +50,4 @@ SELECT p.pname, e.fname FROM project p, department d, employee e WHERE p.dnum = 
 SELECT p.pname, e.fname FROM project p, employee e, works_on w WHERE e.ssn = w.essn AND p.pnumber = w.pno;
 
 --Q18
-SELECT d.dependent_name, e.fname FROM dependent d, employee e, project p WHERE d.essn = e.ssn...
+SELECT e.fname, d.dependent_name, d.relationship FROM employee e, dependent d, project p, department dept WHERE e.ssn = d.essn AND e.dno = dept.dnumber AND dept.dnumber = p.dnum AND p.pnumber = 91;
