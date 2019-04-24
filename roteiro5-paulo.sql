@@ -30,4 +30,9 @@ SELECT e.fname, e.salary FROM employee e WHERE e.salary > ALL (SELECT e.salary F
 -- Q11
 SELECT e.ssn, COUNT(*) AS qtd_proj FROM employee e FULL OUTER JOIN works_on w ON e.ssn = w.essn GROUP BY e.ssn ORDER BY qtd_proj;
 
+-- Q12
+SELECT p.pnumber AS num_proj, COUNT(*) AS qtd_func FROM project p INNER JOIN works_on w ON p.pnumber = w.pno WHERE qtd_func < 5 GROUP BY num_proj;
+
+
+
 
