@@ -17,6 +17,7 @@ SELECT e.fname AS nome_supervisor, COUNT(*) AS qtd_supervisionados FROM employee
 SELECT MIN(h.count) AS qtd FROM (SELECT pno, count(*) FROM works_on group by pno) AS h;
 
 -- Q7
+select pnumber, min(c.count) AS qtd FROM (select pnumber,count(pnumber = pno) from project AS p INNER JOIN works_on AS w ON(p.pnumber = w.pno) GROUP BY pnumber) AS c GROUP BY pnumber having min(c.count) = (select min(x.count) AS qtd FROM (select pnumber,count(pnumber = pno) from project AS p INNER JOIN works_on AS w ON(p.pnumber = w.pno) GROUP BY pnumber) AS x);
 
 -- Q8
 SELECT p.pnumber AS num_proj, AVG(e.salary) FROM project p INNER JOIN works_on w ON (p.pnumber = w.pno) INNER JOIN employee e ON (e.ssn = w.essn) GROUP BY num_proj;
@@ -31,7 +32,17 @@ SELECT e.fname, e.salary FROM employee e WHERE e.salary > ALL (SELECT e.salary F
 SELECT e.ssn, COUNT(*) AS qtd_proj FROM employee e FULL OUTER JOIN works_on w ON e.ssn = w.essn GROUP BY e.ssn ORDER BY qtd_proj;
 
 -- Q12
-SELECT p.pnumber AS num_proj, COUNT(*) AS qtd_func FROM project p INNER JOIN works_on w ON p.pnumber = w.pno WHERE qtd_func < 5 GROUP BY num_proj;
+SELECT p.pnumber AS num_proj, count(*) AS qtd_func FROM project AS p INNER JOIN works_on AS w ON(p.pnumber = w.pno) RIGHT JOIN employee AS e ON (e.ssn = w.essn) GROUP BY num_proj HAVING count(*) < 5 ORDER BY qtd_func; 
+
+--Q13
+SELECT e.fname FROM employee AS e, project AS p, works_on AS w WHERE (e.ssn = w.essn) AND (p.pnumber = w.pno) AND p.plocation = 'Sugarland' AND EXISTS(SELECT pname FROM dependent AS d WHERE d.essn = e.ssn); 
+
+-- Q13
+SELECT e.fname FROM employee AS e WHERE e.ssn IN (SELECT e.ssn FROM works_on AS w WHERE(e.ssn = w.essn) AND w.pno IN (SELECT w.pno FROM project AS p WHERE (p.pnumber = w.pno) AND p.pname IN (SELECT p.pname FROM project AS p WHERE (p.plocation = 'Sugarland') AND EXISTS(SELECT pname FROM dependent AS d WHERE d.essn = e.ssn))));
+
+
+--Q14
+SELECT d.dname FROM department AS d WHERE NOT EXISTS(SELECT * FROM project AS p WHERE p.dnum = dnumber);
 
 
 
