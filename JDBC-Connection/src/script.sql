@@ -1,0 +1,23 @@
+CREATE TABLE LABORATORIO (
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	descricao VARCHAR(100)
+);
+
+CREATE TABLE PROJETO (
+	id SERIAL PRIMARY KEY,
+	titulo VARCHAR(100) NOT NULL,
+	descricao VARCHAR(100),
+	data_inicio DATE NOT NULL,
+	data_fim DATE,
+	id_laboratorio INTEGER NOT NULL REFERENCES laboratorio(id)
+);
+
+CREATE TABLE ALUNO (
+	matricula CHAR(9) PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	cra NUMERIC NOT NULL,
+	dt_nasc DATE NOT NULL,
+	id_projeto INTEGER NOT NULL REFERENCES projeto(id)
+);
+
